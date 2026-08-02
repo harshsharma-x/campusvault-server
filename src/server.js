@@ -596,6 +596,36 @@ app.get('/api/all', requireSession, async (req, res) => {
   res.json(out);
 });
 
+// GET / -> friendly status page so the deployed service doesn't look broken
+app.get('/', (req, res) => {
+  res.type('html').send(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CampusVault API</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; background: #0b0c16; color: #e6e8f5; display: grid; place-items: center; min-height: 100vh; margin: 0; padding: 16px; }
+    .card { text-align: center; padding: 48px 32px; border: 1px solid #2a2d4a; border-radius: 20px; background: #12132a; max-width: 420px; }
+    h1 { font-size: 28px; margin: 0 0 10px; }
+    .ok { color: #34d399; font-weight: 600; }
+    .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #34d399; margin-right: 8px; animation: pulse 1.6s infinite; vertical-align: baseline; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+    code { background: #1d1f3d; padding: 2px 8px; border-radius: 6px; font-size: 13px; }
+    .muted { color: #8a8fb8; font-size: 13px; margin-top: 22px; }
+    a { color: #7b80ff; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>&#128737;&#65039; CampusVault</h1>
+    <p class="ok"><span class="dot"></span>CUIMS API server is running</p>
+    <p class="muted">Health check &rarr; <code><a href="/api/health">/api/health</a></code></p>
+  </div>
+</body>
+</html>`);
+});
+
 // GET /api/health
 app.get('/api/health', (req, res) => res.json({ ok: true, time: new Date().toISOString() }));
 
