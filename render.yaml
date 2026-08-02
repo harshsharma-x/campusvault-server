@@ -1,0 +1,12 @@
+# Render Blueprint — deploy this folder as a free web service.
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: campusvault
+    runtime: node
+    plan: free
+    region: oregon # safe free-tier region (Singapore/Frankfurt may not be free)
+    buildCommand: npm install --omit=dev
+    startCommand: node src/server.js
+    # Live CUIMS mode only — demo mode has been removed entirely.
+    # Port is injected by Render automatically (process.env.PORT).
